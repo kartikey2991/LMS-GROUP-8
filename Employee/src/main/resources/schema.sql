@@ -9,3 +9,9 @@ CREATE TABLE IF NOT EXISTS `Employee` (
     updated_at DATE DEFAULT NULL,
     updated_by VARCHAR(30) DEFAULT NULL
 );
+
+CREATE TABLE IF NOT EXISTS `JoinerMentorConnection` (
+    connection_id INT AUTO_INCREMENT PRIMARY KEY,
+    joiner_id INT NOT NULL,
+    mentor_id INT NOT NULL
+);

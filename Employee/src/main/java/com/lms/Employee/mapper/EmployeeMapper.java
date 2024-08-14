@@ -5,6 +5,7 @@ import com.lms.Employee.entity.Employee;
 
 public class EmployeeMapper {
     public static Employee mapToEmployee(EmployeeDto employeeDto, Employee employee){
+        employee.setEmployeeId(employeeDto.getEmployeeId());
         employee.setEmployeeName(employeeDto.getEmployeeName());
         employee.setEmail(employeeDto.getEmail());
         employee.setPassword(employeeDto.getPassword());
@@ -13,6 +14,7 @@ public class EmployeeMapper {
     }
 
     public static EmployeeDto mapToEmployeeDto(Employee employee, EmployeeDto employeeDto){
+        employeeDto.setEmployeeId(employee.getEmployeeId());
         employeeDto.setEmployeeName(employee.getEmployeeName());
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setPassword(employee.getPassword());

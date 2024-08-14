@@ -1,10 +1,15 @@
 package com.lms.Employee.controller;
 
+import com.lms.Employee.EmployeeApplication;
 import com.lms.Employee.dto.EmployeeDto;
 import com.lms.Employee.dto.ResponseDto;
 import com.lms.Employee.service.IEmployeeService;
+import com.lms.Employee.service.impl.EmployeeServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,11 +17,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@AllArgsConstructor
 @Validated
 public class EmployeeController {
 
-    private IEmployeeService iEmployeeService;
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
+    private EmployeeServiceImpl employeeService;
+
+    private final IEmployeeService iEmployeeService;
+
+    public EmployeeController(IEmployeeService iEmployeeService){
+        this.iEmployeeService = iEmployeeService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createEmployee(@RequestBody @Valid EmployeeDto employeeDto){
@@ -58,4 +72,16 @@ public class EmployeeController {
                     .body(new ResponseDto("Unable to delete", HttpStatus.BAD_REQUEST));
         }
     }
+
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(buildVersion);
+    }
+
+    @GetMapping("/employee/{employeeId}/role")
+    public String getRole(@PathVariable Long employeeId) {
+        return employeeService.getRoleByEmployeeId(employeeId);
+    }
 }
+
