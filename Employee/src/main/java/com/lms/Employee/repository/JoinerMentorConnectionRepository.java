@@ -12,8 +12,11 @@ import java.util.Optional;
 @Repository
 public interface JoinerMentorConnectionRepository extends JpaRepository<JoinerMentorConnection, Long> {
 
-    Optional<JoinerMentorConnection>  findByJoinerId(Long joinerId);
+      JoinerMentorConnection findByJoinerId(Long joinerId);
 
-    @Query("SELECT mj.joinerId FROM MentorJoiner mj WHERE mj.mentorId = :mentorId")
-    List<Long> findJoinerIdsByMentorId(@Param("mentorId") Long mentorId);
+
+//    @Query("SELECT mj.joinerId FROM MentorJoiner mj WHERE mj.mentorId = :mentorId")
+//    List<Long> findJoinerIdsByMentorId(Long mentorId);
+
+    List<JoinerMentorConnection> findAllByMentorId(Long mentorId);
 }

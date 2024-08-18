@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JoinerMentorConnectionDto {
-    private Long connectionId;
     private Long joinerId;
     private Long mentorId;
     private EmployeeDto employeeDto;

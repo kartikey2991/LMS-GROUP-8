@@ -3,6 +3,7 @@ package com.lms.Employee.controller;
 import com.lms.Employee.dto.EmployeeDto;
 import com.lms.Employee.dto.JoinerMentorConnectionDto;
 import com.lms.Employee.dto.ResponseDto;
+import com.lms.Employee.entity.JoinerMentorConnection;
 import com.lms.Employee.service.IJoinerMentorConnectionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,38 @@ public class JoinerMentorConnectionController {
     }
 
     @GetMapping("/fetchByMentorId/{mentorId}/")
-    public List<Long> getJoinerIds(@PathVariable Long mentorId) {
-        return iJoinerMentorConnectionService.getJoinerIdsByMentorId(mentorId);
+    public ResponseEntity<List<JoinerMentorConnection>> getJoinerIds(@PathVariable Long mentorId) {
+        List<JoinerMentorConnection> list = iJoinerMentorConnectionService.getJoinerIdsByMentorId(mentorId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(list);
+
+    }
+
+    @PutMapping("/updateJoinerMentorConnection/")
+    public ResponseEntity<ResponseDto> updateDetails(@RequestBody JoinerMentorConnectionDto joinerMentorConnectionDto){
+        boolean isUpdated = iJoinerMentorConnectionService.updateJoinerMentorConnection(joinerMentorConnectionDto);
+
+        if(isUpdated){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseDto("Updated Successfully", HttpStatus.ACCEPTED));
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseDto("Unable to update", HttpStatus.BAD_REQUEST));
+        }
+    }
+
+    @DeleteMapping("/deleteJoinerMentorConnection/")
+    public ResponseEntity<ResponseDto> deleteJoinerMentorConnection(@RequestParam Long joinerId){
+        boolean isDeleted = iJoinerMentorConnectionService.deleteDetails(joinerId);
+
+        if(isDeleted){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseDto("Deleted Successfully", HttpStatus.ACCEPTED));
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseDto("Unable to delete", HttpStatus.BAD_REQUEST));
+        }
     }
 }

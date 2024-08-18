@@ -13,4 +13,6 @@ public class EmployeeDto {
     private String email;
     private String password;
     private String role;
+    private Boolean communicationSw;
+
 }
