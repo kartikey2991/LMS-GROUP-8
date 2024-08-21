@@ -2,6 +2,7 @@ package com.lms.Employee.service.impl;
 
 import com.lms.Employee.dto.EmployeeDto;
 import com.lms.Employee.entity.Employee;
+import com.lms.Employee.entity.JoinerMentorConnection;
 import com.lms.Employee.exception.EmployeeAlreadyExistsException;
 import com.lms.Employee.exception.ResourceNotFoundException;
 import com.lms.Employee.mapper.EmployeeMapper;
@@ -10,6 +11,7 @@ import com.lms.Employee.service.IEmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -72,6 +74,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public List<Employee> fetchDetailsByRole(String role) {
+        List<Employee> allByRole = employeeRepository.findAllByRole(role);
+        return allByRole;
     }
 
     public String getRoleByEmployeeId(Long employeeId) {

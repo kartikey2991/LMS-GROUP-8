@@ -36,7 +36,6 @@ public class JoinerMentorConnectionController {
         List<JoinerMentorConnection> list = iJoinerMentorConnectionService.getJoinerIdsByMentorId(mentorId);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(list);
-
     }
 
     @PutMapping("/updateJoinerMentorConnection/")

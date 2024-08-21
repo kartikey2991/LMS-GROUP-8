@@ -3,6 +3,8 @@ package com.lms.Employee.controller;
 import com.lms.Employee.EmployeeApplication;
 import com.lms.Employee.dto.EmployeeDto;
 import com.lms.Employee.dto.ResponseDto;
+import com.lms.Employee.entity.Employee;
+import com.lms.Employee.entity.JoinerMentorConnection;
 import com.lms.Employee.service.IEmployeeService;
 import com.lms.Employee.service.impl.EmployeeServiceImpl;
 import jakarta.validation.Valid;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -43,6 +47,13 @@ public class EmployeeController {
         EmployeeDto employeeDto = iEmployeeService.fetchDetails(email);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(employeeDto);
+    }
+
+    @GetMapping("/fetchByRole")
+    public ResponseEntity<List<Employee>> fetchDetailsByRole(@RequestParam String role) {
+        List<Employee> list = iEmployeeService.fetchDetailsByRole(role);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(list);
     }
 
     @PutMapping("/update")
